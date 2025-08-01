@@ -1,0 +1,6 @@
+@Orestes.Simulator.WebAPI_HostAddress = http://localhost:5062
+
+GET {{Orestes.Simulator.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
