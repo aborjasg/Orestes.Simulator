@@ -1,5 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Orestes.Simulator.DataSource;
+using Orestes.Simulator.WebAPI.Security;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +13,43 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 // Swagger configuration
 builder.Services.AddSwaggerGen();
-// Enabled CORS
-builder.Services.AddCors();
 
+const int APIPort = 5062;
+// Enabled CORS
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("CorsPolicy",
+//        policy =>
+//        {
+//            policy.WithOrigins($"http://localhost:{APIPort}", $"https://localhost:{APIPort}")
+//            .SetIsOriginAllowed((host) => true)
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .AllowCredentials();
+//        });
+//});
+// Add Authorization
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+       .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new TokenValidationParameters
+           {
+               ValidateIssuerSigningKey = true,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!)),
+               ValidateIssuer = true,
+               ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+               ValidateAudience = true,
+               ValidAudience = builder.Configuration["JwtSettings:Audience"],
+               ValidateLifetime = true,
+               ClockSkew = TimeSpan.Zero // optional, removes default 5 min clock skew
+           };
+       });
+builder.Services.AddSingleton<IJwtSettings, JwtSettings>(e => builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!);
+// Add API Key Validator
+//builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
+// Add DB Context
 builder.Services.AddDbContext<OrestesDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("OrestesSimulatorConnection")));
-
 
 var app = builder.Build();
 
@@ -26,11 +61,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors(options =>
-     options.WithOrigins("http://localhost:5062")
-            .AllowAnyHeader()
-            .AllowAnyMethod());
+//app.UseMiddleware<ApiKeyMiddleware>();
+//app.UseCors("CorsPolicy");
 
 app.MapControllers();
 app.Run();
