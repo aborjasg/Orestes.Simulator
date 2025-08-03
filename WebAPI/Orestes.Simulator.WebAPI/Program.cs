@@ -9,6 +9,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 // Swagger configuration
 builder.Services.AddSwaggerGen();
+// Enabled CORS
+builder.Services.AddCors();
 
 builder.Services.AddDbContext<OrestesDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("OrestesSimulatorConnection")));
@@ -25,7 +27,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+app.UseCors(options =>
+     options.WithOrigins("http://localhost:5062")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 
 app.MapControllers();
-
 app.Run();
