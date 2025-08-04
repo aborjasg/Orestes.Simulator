@@ -1,23 +1,29 @@
-import { Component } from '@angular/core';
-import { RestApiService } from '../../services/rest-api.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Customer, RestApiService } from '../../services/rest-api.service';
+import { Observable, of, take } from 'rxjs';
 
 @Component({
   selector: 'app-customers',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './customers.html',
   styleUrl: './customers.css'
 })
-export class Customers {
-  list: any[] = [];
+export class Customers implements OnInit {
+  listCustomer: any[]=[];
   constructor(private api: RestApiService) {}
 
   ngOnInit() {
-    this.loadData();
+    this.loadData();     
   }
 
   loadData() {
-    this.api.getCustomers().subscribe(data => {
-      this.list = data;
-    });
+    this.api.getToken().subscribe(response => {
+        //console.log("Customer: getToken():", response);
+        this.api.getCustomers(response.access_token).subscribe(response => {
+          console.log("Customer: getCustomers():", response);
+          this.listCustomer = response;
+        });
+      });
   }  
 }

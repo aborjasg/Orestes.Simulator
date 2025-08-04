@@ -16,18 +16,18 @@ builder.Services.AddSwaggerGen();
 
 const int APIPort = 5062;
 // Enabled CORS
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("CorsPolicy",
-//        policy =>
-//        {
-//            policy.WithOrigins($"http://localhost:{APIPort}", $"https://localhost:{APIPort}")
-//            .SetIsOriginAllowed((host) => true)
-//            .AllowAnyMethod()
-//            .AllowAnyHeader()
-//            .AllowCredentials();
-//        });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        policy =>
+        {
+            policy.WithOrigins($"http://localhost:{APIPort}", $"https://localhost:{APIPort}")
+            .SetIsOriginAllowed((host) => true)
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials();
+        });
+});
 // Add Authorization
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        .AddJwtBearer(options =>
@@ -64,7 +64,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 //app.UseMiddleware<ApiKeyMiddleware>();
-//app.UseCors("CorsPolicy");
+app.UseCors("CorsPolicy");
 
 app.MapControllers();
 app.Run();

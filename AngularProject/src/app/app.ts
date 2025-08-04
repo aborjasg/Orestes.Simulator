@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WeatherForecast } from "./components/weather-forecast/weather-forecast";
 import { Customers } from "./components/customers/customers";
 
@@ -10,8 +9,7 @@ import { Customers } from "./components/customers/customers";
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {  
-  list: any[] = [];
+export class App {    
   protected readonly title = signal('Orestes.Simulator');
   
 }

@@ -10,19 +10,14 @@ function Customers() {
         const fetchData = async () => {
             const apiURL_base = 'http://localhost:5062';
             const apiURL_Customers = `${apiURL_base}/api/Customers`;
-            const request_headers = new Headers();
-            request_headers.append('Content-Type', 'application/json');
-            request_headers.append('Accept', 'application/json');
-            request_headers.append('Access-Control-Allow-Origin', apiURL_base);
-            request_headers.append('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-            request_headers.append('Access-Control-Allow-Methods', 'GET, POST');
-            request_headers.append('Access-Control-Allow-Credentials', 'true');
-            console.log(`Customers: api=${apiURL_Customers} / ${request_headers}`);
+            const header_def = {                
+                'Access-Control-Allow-Origin': apiURL_base,
+                'x-api-key': 'P@ssw0rd1978',
+            }
+            const request_headers = new Headers(header_def);
+            console.log(`Customers: api=${apiURL_Customers} | ${request_headers.get("mode")}`);
 
-            fetch(apiURL_Customers, {
-                method: 'GET',
-                headers: request_headers
-            })
+            fetch(apiURL_Customers, { method: 'GET', headers: request_headers })
             .then(response => response.json())
             .then(data => {
                 console.log(`Customer: data=${data}`)

@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 .azure
+/OrestesSimulator.code-workspace
+/ReactProject.7z
+/package-lock.json
