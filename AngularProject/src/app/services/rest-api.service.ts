@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { from, Observable, switchMap } from 'rxjs';
 import { error } from 'console';
 import { response } from 'express';
 
 export interface ResponseToken {
   access_token: string;
+}
+
+export interface WeatherForecast {
+  date: string;
+  summary: string;
+  temperatureC: boolean;
 }
 
 export interface Customer {
@@ -25,7 +31,7 @@ export class RestApiService {
 
   constructor(private http: HttpClient) {}
 
-  getToken():Observable<ResponseToken> {
+  getToken(): Observable<ResponseToken> {
     let body = {
     "Username": "demo", 
     "Password": "password"
@@ -33,19 +39,15 @@ export class RestApiService {
     return this.http.post<ResponseToken>(this.apiURL_Authentication, body);
   }
 
-  getWeatherForecast(): Observable<any> {    
-    return this.http.get(this.apiURL_WeatherForecast);
+  getWeatherForecast(): Observable<WeatherForecast[]> {    
+    return this.http.get<WeatherForecast[]>(this.apiURL_WeatherForecast);
   }
 
-  getCustomers(access_token:string): Observable<any> {
+  getCustomers(access_token:string): Observable<Customer[]> {
     let request_headers = new HttpHeaders({
       'Access-Control-Allow-Origin': this.apiURL_base,
       'Authorization': `Bearer ${access_token}`
     });    
-    // console.log('Origin:', this.apiURL_base);
-    // console.log('access_token:', access_token);
-      
-    return this.http.get(this.apiURL_Customers, { headers: request_headers });
+    return this.http.get<Customer[]>(this.apiURL_Customers, { headers: request_headers });
   }
-
 }

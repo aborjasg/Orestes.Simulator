@@ -1,14 +1,14 @@
-<div class="table">   
-    <div class="row">
-        <div class="column"><b>Weather Forecast</b></div>
-        <div class="column">
-            @if (this.listWeather != []) { 
-            <ul>
-                @for (item of this.listWeather; track item.date) {    
-                    <li class="user-badge">{{item.date}} | {{item.summary}} | {{item.temperatureC}} C</li>  
-                }
-            </ul>   
+<div style="width: 300px;"><b>Weather Forecast</b></div>
+<div>
+    @if (this.listWeather.length > 0) { 
+    <ul>
+        @for (item of this.listWeather; track item.date) {    
+            <li class="user-badge">{{item.date}} | {{item.summary}} | {{item.temperatureC}} C</li>  
         }
-        </div>      
-    </div>      
-</div>   
+    </ul>   
+    }        
+    @else { 
+        <p>Loading data...</p>
+    }
+</div>      
+

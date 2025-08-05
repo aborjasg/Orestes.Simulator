@@ -1,14 +1,20 @@
-<div class="table">   
-    <div class="row">
-        <div class="column"><b>Customer List</b></div>
-        <div class="column">    
-            @if (this.listCustomer != []) {         
+<div><b>Customers</b></div>
+<div>   
+    @if (this.listCustomer | async; as list) {         
+    <ul>
+        @for (item of list; track item.id) {    
+            <li class="user-badge">[{{item.id}}] {{item.name}} | {{item.status}}</li>  
+        }
+    </ul>                
+    }
+    @else { 
+        <p>Loading data...</p>
+    }
+    <!-- <ng-container *ngIf="this.listCustomer | async as list">
+        <ng-container *ngFor="let item of list">
             <ul>
-                @for (item of this.listCustomer; track item.id) {    
-                    <li class="user-badge">[{{item.id}}] {{item.name}} | {{item.status}}</li>  
-                }
+                <li class="user-badge">[{{item.id}}] {{item.name}} | {{item.status}}</li>  
             </ul>
-            }
-        </div>        
-    </div>      
+        </ng-container>
+    </ng-container> -->
 </div>   

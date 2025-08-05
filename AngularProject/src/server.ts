@@ -60,17 +60,6 @@ if (isMainModule(import.meta.url)) {
     console.log(`Node Express server listening on http://localhost:${port}`);
   });
 
-  app.get('/WeatherForecast', (req, res) => {
-    res.set('Access-Control-Allow-Origin', 'http://localhost:5062');
-    res.json({'candy': 'bubble-gum'})
-});
-
-  app.options('/WeatherForecast', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5062');
-    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    res.sendStatus(200);
-  });
 }
 
 /**
