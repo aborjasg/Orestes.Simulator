@@ -1,11 +1,12 @@
-﻿namespace Orestes.Simulator.Testing
+﻿using System.Text.RegularExpressions;
+
+namespace Orestes.Simulator.Testing
 {
-    [Parallelizable(ParallelScope.Self)]
-    [TestFixture]
-    public class Tests : PageTest
+    [TestClass]
+    public class Test1 : PageTest
     {
-        [Test]
-        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingtoTheIntroPage()
+        [TestMethod]
+        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingToTheIntroPage()
         {
             await Page.GotoAsync("https://playwright.dev");
 
