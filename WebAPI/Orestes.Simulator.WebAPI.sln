@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orestes.Simulator.DataSourc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orestes.Simulator.ConsoleApp", "Orestes.Simulator.ConsoleApp\Orestes.Simulator.ConsoleApp.csproj", "{37A5B975-AACD-44DF-A284-CE43D3A0978E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orestes.Simulator.Testing", "Orestes.Simulator.Testing\Orestes.Simulator.Testing.csproj", "{B3EC59B2-6CA9-46FF-8136-32550D83A6F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{37A5B975-AACD-44DF-A284-CE43D3A0978E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37A5B975-AACD-44DF-A284-CE43D3A0978E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37A5B975-AACD-44DF-A284-CE43D3A0978E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3EC59B2-6CA9-46FF-8136-32550D83A6F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3EC59B2-6CA9-46FF-8136-32550D83A6F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3EC59B2-6CA9-46FF-8136-32550D83A6F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3EC59B2-6CA9-46FF-8136-32550D83A6F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
