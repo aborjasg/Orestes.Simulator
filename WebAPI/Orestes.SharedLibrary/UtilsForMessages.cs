@@ -18,6 +18,8 @@ namespace Orestes.SharedLibrary
     {
         #region Public Functions
 
+        public const string StandardDateTimeFormat = "yyyy-MM-dd_HH:mm:ss:fff";
+
         /// <summary>
         /// Compresses a string and returns a deflate compressed, Base64 encoded string.
         /// </summary>
@@ -87,6 +89,36 @@ namespace Orestes.SharedLibrary
         public static T? DeserializeObject<T>(string obj)
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(obj);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entryType"></param>
+        /// <param name="message"></param>
+        public static void EventLog(string entryType, string message)
+        {
+            Console.WriteLine(MaskedwithTimestamp(message, entryType.ToString()));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="method"></param>
+        /// <param name="message"></param>
+        /// <param name="recipient"></param>
+        /// <param name="node"></param>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string MaskedwithTimestamp(string message, string logLevel = "", string sender = "", string recipient = "", DateTime? dateTime = null)
+        {
+            if (!string.IsNullOrEmpty(logLevel)) logLevel = $"[{logLevel}]";
+            if (!string.IsNullOrEmpty(sender)) sender = $"{sender}: ";
+            if (!string.IsNullOrEmpty(recipient)) recipient = $" -> {recipient}";
+            if (dateTime == null) dateTime = DateTime.Now;
+
+            return $"{logLevel} {((DateTime)dateTime).ToString(StandardDateTimeFormat)} {sender}{message}{recipient}";
         }
 
         #endregion
