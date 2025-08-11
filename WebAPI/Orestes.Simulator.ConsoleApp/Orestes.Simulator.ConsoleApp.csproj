@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Orestes.SharedLibrary" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Orestes.Simulator.WebAPI\Orestes.Simulator.WebAPI.csproj" />
   </ItemGroup>
 

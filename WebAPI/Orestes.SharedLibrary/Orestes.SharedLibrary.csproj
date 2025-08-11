@@ -4,7 +4,20 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Orestes.SharedLibrary</Title>
+    <Copyright>Orestes Corp.</Copyright>
+    <PackageProjectUrl>https://github.com/aborjasg/</PackageProjectUrl>
+    <PackageIcon>Orestes-logo.png</PackageIcon>
+    <PackageTags>Orestes; SharedLibrary;</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Z:\Software Projects\GitHub\OrestesCorp\Orestes-logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
