@@ -1,4 +1,4 @@
-namespace Orestes.Simulator.WebAPI
+namespace Orestes.Simulator.DataSource.Models
 {
     public class WeatherForecast
     {

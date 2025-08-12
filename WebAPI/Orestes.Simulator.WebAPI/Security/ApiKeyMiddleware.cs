@@ -19,7 +19,7 @@
                 return;
             }
 
-            string storedApiKey = _configuration["ApiKey"]; // Retrieve from configuration
+            string storedApiKey = _configuration["ApiKey"]!; // Retrieve from configuration
 
             if (!extractedApiKey.Equals(storedApiKey))
             {

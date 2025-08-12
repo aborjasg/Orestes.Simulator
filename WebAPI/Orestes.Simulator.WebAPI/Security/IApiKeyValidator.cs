@@ -17,7 +17,7 @@
         public bool IsValid(string userApiKey)
         {
             // Retrieve API key from configuration (e.g., appsettings.json)
-            string storedApiKey = _configuration["ApiKey"];
+            string storedApiKey = _configuration["ApiKey"]!;
             return !string.IsNullOrEmpty(userApiKey) && userApiKey == storedApiKey;
         }
     }

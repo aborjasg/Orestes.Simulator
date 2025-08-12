@@ -16,7 +16,7 @@ namespace Orestes.Simulator.WebAPI.Security
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            string apiKey = context.HttpContext.Request.Headers[ApiKeyHeaderName];
+            string apiKey = context.HttpContext.Request.Headers[ApiKeyHeaderName]!;
             if (!_apiKeyValidator.IsValid(apiKey))
             {
                 context.Result = new UnauthorizedResult();
