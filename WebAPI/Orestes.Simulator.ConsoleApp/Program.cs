@@ -1,27 +1,29 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Orestes.Simulator.WebAPI.Security;
 using Orestes.SharedLibrary;
+using Orestes.SharedLibrary.enums;
+using Orestes.Simulator.WebAPI.Security;
+using System;
 using System.Diagnostics;
 
-UtilsForMessages.EventLog("Info", "Starting Orestes.Simulator...");
+UtilsForMessages.EventLog(enmLogLevel.Info, "Starting Orestes.Simulator...");
 
-string phrase = "Orestes.Simulator-SharedLibrary-v1.0.0";
+string phrase = "Orestes.Simulator-SharedLibrary-v1.0.*";
 
 #region Compress/Decompress
 
-//string compressed = UtilsForMessages.Compress(phrase);
-//UtilsForMessages.EventLog("Info", $"Compressed: {compressed}.");
-//string decompressed = UtilsForMessages.Decompress(compressed);
-//UtilsForMessages.EventLog("Info", $"Decompressed: {decompressed}.");
+string compressed = UtilsForMessages.Compress(phrase);
+UtilsForMessages.EventLog(enmLogLevel.Info, $"Compressed: {compressed}.");
+string decompressed = UtilsForMessages.Decompress(compressed);
+UtilsForMessages.EventLog(enmLogLevel.Info, $"Decompressed: {decompressed}.");
 
 #endregion
 
 #region Serialize/Deserialize
 
 //string serialized = UtilsForMessages.SerializeObject<string>(phrase);
-//UtilsForMessages.EventLog("Info", $"Serialized: {serialized}.");
+//UtilsForMessages.EventLog(enmLogLevel.Info, $"Serialized: {serialized}.");
 //var deserialized = UtilsForMessages.DeserializeObject<string>(serialized);
-//UtilsForMessages.EventLog("Info", $"Deserialized: {deserialized}.");
+//UtilsForMessages.EventLog(enmLogLevel.Info, $"Deserialized: {deserialized}.");
 
 #endregion
 
@@ -32,6 +34,6 @@ string phrase = "Orestes.Simulator-SharedLibrary-v1.0.0";
 
 #endregion
 
-UtilsForMessages.EventLog("Info", "End of process.");
+UtilsForMessages.EventLog(enmLogLevel.Info, "End of process.");
 
 

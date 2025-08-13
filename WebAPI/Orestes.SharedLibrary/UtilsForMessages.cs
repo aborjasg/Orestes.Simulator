@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Orestes.SharedLibrary.enums;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -96,7 +97,7 @@ namespace Orestes.SharedLibrary
         /// </summary>
         /// <param name="entryType"></param>
         /// <param name="message"></param>
-        public static void EventLog(string entryType, string message)
+        public static void EventLog(enmLogLevel entryType, string message)
         {
             Console.WriteLine(MaskedwithTimestamp(message, entryType.ToString()));
         }
