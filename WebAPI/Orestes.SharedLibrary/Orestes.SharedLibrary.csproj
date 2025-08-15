@@ -12,10 +12,24 @@
     <PackageTags>Orestes; SharedLibrary;</PackageTags>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>Orestes-logo_32x32.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Orestes-logo_32x32.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\..\OrestesCorp\Orestes-logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 

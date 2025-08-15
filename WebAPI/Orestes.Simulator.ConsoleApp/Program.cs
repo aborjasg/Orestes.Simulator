@@ -11,10 +11,10 @@ string phrase = "Orestes.Simulator-SharedLibrary-v1.0.*";
 
 #region Compress/Decompress
 
-string compressed = UtilsForMessages.Compress(phrase);
-UtilsForMessages.EventLog(enmLogLevel.Info, $"Compressed: {compressed}.");
-string decompressed = UtilsForMessages.Decompress(compressed);
-UtilsForMessages.EventLog(enmLogLevel.Info, $"Decompressed: {decompressed}.");
+//string compressed = UtilsForMessages.Compress(phrase);
+//UtilsForMessages.EventLog(enmLogLevel.Info, $"Compressed: {compressed}.");
+//string decompressed = UtilsForMessages.Decompress(compressed);
+//UtilsForMessages.EventLog(enmLogLevel.Info, $"Decompressed: {decompressed}.");
 
 #endregion
 
@@ -31,6 +31,13 @@ UtilsForMessages.EventLog(enmLogLevel.Info, $"Decompressed: {decompressed}.");
 
 //string message = UtilsForMessages.MaskedwithTimestamp(phrase, "Info", "Desktop", "CMD");
 //Console.WriteLine(message);
+
+#endregion
+
+#region Orestes.Library
+
+var matrix = FakeData.GetNcpData();
+UtilsForMessages.EventLog(enmLogLevel.Info, $"matrix: {matrix}");
 
 #endregion
 
