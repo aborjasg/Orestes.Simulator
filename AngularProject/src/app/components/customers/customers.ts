@@ -1,6 +1,6 @@
-import { Component, Injectable, OnInit, Signal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, Injectable, OnInit, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Customer, ResponseToken, RestApiService } from '../../services/rest-api.service';
+import { ICustomer, RestApiService } from '../../services/rest-api.service';
 import { forkJoin, map, Observable, of, retry, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
@@ -11,25 +11,29 @@ import { forkJoin, map, Observable, of, retry, shareReplay, switchMap, tap } fro
   host: {ngSkipHydration: 'true'},
 })
 export class Customers implements OnInit {
-  listCustomer!: Observable<any>;  
-  constructor(private api: RestApiService) {}
+  list$: ICustomer[] = [];  
+  constructor(private api: RestApiService, private cdr: ChangeDetectorRef) {}
   
   ngOnInit() {
+    this.loadData();    
+  } 
+
+  loadData() {
     this.api.getToken()
     .pipe(
-      switchMap(token => {
-        //console.log("API|getToken():", token.access_token);
-        return this.api.getCustomers(token.access_token)
-      }),
-      shareReplay(1))
+      switchMap(token => {        
+        this.api.setToken(token.access_token);
+        return this.api.getCustomers()
+      }))
     .subscribe({ 
-      next: list => {
-        console.log("API|getCustomers():", list);
-        this.listCustomer = of(list);
+        next: list => {
+          console.log("API|getCustomers():", list);
+          this.list$ = list
+          this.cdr.detectChanges();
       },
       error: error => console.error(`API|Error: ${error}`),
-      complete: () => console.log("API|Completed")
+      complete: () => console.log(`API|End of process`)
     });
-  } 
+  }
 
 }

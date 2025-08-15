@@ -1,8 +1,7 @@
-<div style="width: 300px;"><b>Weather Forecast</b></div>
-<div>
-    @if (this.listWeather.length > 0) { 
+<div style="width: 300px;"><b>Weather Forecast</b>
+    @if (this.list$.length > 0) { 
     <ul>
-        @for (item of this.listWeather; track item.date) {    
+        @for (item of this.list$; track item.date) {    
             <li class="user-badge">{{item.date}} | {{item.summary}} | {{item.temperatureC}} C</li>  
         }
     </ul>   

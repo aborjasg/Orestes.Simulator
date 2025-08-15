@@ -1,20 +1,12 @@
-<div><b>Customers</b></div>
-<div>   
-    @if (this.listCustomer | async; as list) {         
+<div style="width: 250px;"><b>Customers</b>
+    @if (this.list$.length > 0) {         
     <ul>
-        @for (item of list; track item.id) {    
-            <li class="user-badge">[{{item.id}}] {{item.name}} | {{item.status}}</li>  
+        @for (item of this.list$; track item.id) {    
+            <li class="user-badge">[{{item.id}}] {{item.name}}</li>  
         }
     </ul>                
     }
     @else { 
         <p>Loading data...</p>
-    }
-    <!-- <ng-container *ngIf="this.listCustomer | async as list">
-        <ng-container *ngFor="let item of list">
-            <ul>
-                <li class="user-badge">[{{item.id}}] {{item.name}} | {{item.status}}</li>  
-            </ul>
-        </ng-container>
-    </ng-container> -->
-</div>   
+    }    
+</div> 
