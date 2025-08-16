@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orestes.SharedLibrary
+namespace Orestes.SharedLibrary.PictureMaker
 {
     /// <summary>
 	/// for Python Slice notation [start:end:step]<br/>
@@ -141,7 +141,7 @@ namespace Orestes.SharedLibrary
             get
             {
                 int nRcd = 1;
-                if ((Step != null) && ((int)Step != 0))
+                if (Step != null && (int)Step != 0)
                 {
                     nRcd = (int)Step;
                 }
@@ -165,7 +165,7 @@ namespace Orestes.SharedLibrary
             get
             {
                 int nRcd = NStop - NStart;
-                if ((nRcd * NStep) >= 0)
+                if (nRcd * NStep >= 0)
                 {
                     int nTemp = nRcd / NStep;
                     if (nRcd % NStep != 0)

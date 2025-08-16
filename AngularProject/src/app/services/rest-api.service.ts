@@ -20,6 +20,22 @@ export interface ICustomer {
   status: boolean;
 }
 
+export interface IDerivedDataFilter {
+  name: string;
+  compressedData: string;
+}
+
+export interface IActionResponse {
+  id: number;
+  type: string;
+  message: string;
+  content: string;
+  startDate: Date;
+  endDate: Date;
+  duration: number;
+  contentLenght: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +44,8 @@ export class RestApiService {
   private apiURL_Authentication = `${this.apiURL_base}/api/Authentication/login`;
   private apiURL_WeatherForecast = `${this.apiURL_base}/api/WeatherForecast`;
   private apiURL_Customers = `${this.apiURL_base}/api/Customers`;    
+  private apiURL_PictureMaker_getSourceData = `${this.apiURL_base}/api/PictureMaker/getSourceData`;
+  private apiURL_PictureMaker_processData = `${this.apiURL_base}/api/PictureMaker/processData`;
   private accessToken: string = "";
 
   constructor(private http: HttpClient) {}
@@ -59,6 +77,32 @@ export class RestApiService {
     }
     else {
       return of([]);
+    }
+  }
+
+  getPictureMakerSourceData(filter: IDerivedDataFilter): Observable<IActionResponse> {
+    if (this.accessToken) {
+      let request_headers = new HttpHeaders({
+        'Access-Control-Allow-Origin': this.apiURL_base,
+        'Authorization': `Bearer ${this.accessToken}`
+      });    
+      return this.http.post<IActionResponse>(this.apiURL_PictureMaker_getSourceData, filter, { headers: request_headers });
+    }
+    else {
+      return of();
+    }
+  }
+
+  getPictureMakerProcessData(filter: IDerivedDataFilter): Observable<IActionResponse> {
+    if (this.accessToken) {
+      let request_headers = new HttpHeaders({
+        'Access-Control-Allow-Origin': this.apiURL_base,
+        'Authorization': `Bearer ${this.accessToken}`
+      });    
+      return this.http.post<IActionResponse>(this.apiURL_PictureMaker_processData, filter, { headers: request_headers });
+    }
+    else {
+      return of();
     }
   }
 

@@ -1,2 +1,13 @@
-<div><b>Picture Maker</b></div>
-<p>Loading data...</p>
+<div style="width: 300px;"><b>Picture Maker</b>
+    @if (this.processData$.content != "") {                     
+        <!-- <pre>{{ this.processData$ | json }}</pre> -->
+         <p>time={{ this.processData$.duration }}</p>
+         <p>length={{ this.processData$.contentLenght }}</p>
+        <img src="{{ this.processData$.content }}"/>        
+    }
+    @else { 
+        <p>Loading data...</p>
+    }    
+    
+</div> 
+

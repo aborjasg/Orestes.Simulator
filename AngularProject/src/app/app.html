@@ -183,8 +183,7 @@
 </style>
 
 <main class="main">  
-  <div class="content">
-    <div class="divider" role="separator" aria-label="Divider"></div>      
+  <div class="content" style="display: flex;">    
     <div class="left-side">          
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -233,19 +232,24 @@
       </svg>
       <h1>{{ title() }}</h1>
       <p>Components are connecting to Web API...🎉</p>          
-    </div>          
-    <div class="divider" role="separator" aria-label="Divider"></div>      
-  </div>          
-  <div class="content">
-    <app-weather-forecast></app-weather-forecast>
-  </div>
-  <div class="content">
-    <app-customers></app-customers>
-  </div>
-  <div class="content">
-    <app-picture-maker></app-picture-maker>
+    </div>            
   </div>
 </main>
+<table>
+  <tr>
+    <td>
+      <app-weather-forecast></app-weather-forecast>    
+    </td>
+    <td>
+      <app-customers></app-customers>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+      <app-picture-maker></app-picture-maker>    
+    </td>
+  </tr>
+</table>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orestes.SharedLibrary.PictureMaker
+namespace Orestes.SharedLibrary.PictureMaker.Models
 {
     /// <summary>
     /// 

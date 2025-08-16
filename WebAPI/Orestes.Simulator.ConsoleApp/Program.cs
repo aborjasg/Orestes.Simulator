@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Orestes.SharedLibrary;
-using Orestes.SharedLibrary.enums;
+using Orestes.SharedLibrary.Enums;
+using Orestes.SharedLibrary.PictureMaker.Models;
 using Orestes.Simulator.WebAPI.Security;
 using System;
 using System.Diagnostics;
@@ -34,10 +35,22 @@ string phrase = "Orestes.Simulator-SharedLibrary-v1.0.*";
 
 #endregion
 
-#region Orestes.Library
+#region Orestes.SharedLibrary
 
-var matrix = FakeData.GetNcpData();
-UtilsForMessages.EventLog(enmLogLevel.Info, $"matrix: {matrix}");
+var orchestration = new Orestes.SharedLibrary.PictureMaker.Orchestration();
+var sourceData = orchestration.getSourceData(new Orestes.SharedLibrary.PictureMaker.Models.DerivedDataFilter 
+{ 
+    Name = "Combined NCP (Miniature)" 
+});
+UtilsForMessages.EventLog(enmLogLevel.Info, $"getSourceData: {UtilsForMessages.SerializeObject<ActionResponse>(sourceData)}");
+
+var processData = orchestration.processData(new Orestes.SharedLibrary.PictureMaker.Models.DerivedDataFilter
+{
+    Name = "Combined NCP (Miniature)",
+    CompressedData = sourceData.Content
+});
+UtilsForMessages.EventLog(enmLogLevel.Info, $"processData: {UtilsForMessages.SerializeObject<ActionResponse>(processData)}");
+//UtilsForMessages.EventLog(enmLogLevel.Info, $"imageString: {orchestration.getImageString(processData.Content)}");
 
 #endregion
 

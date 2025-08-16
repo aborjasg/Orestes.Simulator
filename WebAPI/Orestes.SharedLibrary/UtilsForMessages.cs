@@ -1,4 +1,4 @@
-﻿using Orestes.SharedLibrary.enums;
+﻿using Orestes.SharedLibrary.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
