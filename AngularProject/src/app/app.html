@@ -184,7 +184,7 @@
 
 <main class="main">  
   <div class="content" style="display: flex;">    
-    <div class="left-side">          
+    <div class="center">          
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 982 239"
@@ -231,10 +231,19 @@
         </defs>
       </svg>
       <h1>{{ title() }}</h1>
-      <p>Components are connecting to Web API...🎉</p>          
+      @if (isAPIrunning)
+      {
+        <i>Connected to Orestes.Simulator API services...🎉</i>          
+      }
+      @else {
+        <p>No access to Orestes.Simulator API services</p>
+      }
     </div>            
   </div>
 </main>
+
+@if (isAPIrunning)
+{
 <table>
   <tr>
     <td>
@@ -250,6 +259,10 @@
     </td>
   </tr>
 </table>
+}
+@else {
+  <div></div>
+}
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->

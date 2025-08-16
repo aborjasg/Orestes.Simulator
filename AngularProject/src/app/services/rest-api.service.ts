@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { from, Observable, of, switchMap } from 'rxjs';
+import { catchError, from, Observable, of, switchMap } from 'rxjs';
 import { error } from 'console';
 import { response } from 'express';
 
@@ -47,14 +47,52 @@ export class RestApiService {
   private apiURL_PictureMaker_getSourceData = `${this.apiURL_base}/api/PictureMaker/getSourceData`;
   private apiURL_PictureMaker_processData = `${this.apiURL_base}/api/PictureMaker/processData`;
   private accessToken: string = "";
+  private isAPIrunning: boolean = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { this.checkAPIServices(); }
 
-  getToken(): Observable<IResponseToken> {
-    let body = {
+  // Private methods:
+
+  private getAuthenticationUser() : any {
+    let json_body = {
     "Username": "demo", 
     "Password": "password"
     }    
+    return json_body;
+  }
+  
+  private getAuthorizedHeader() : HttpHeaders {
+    return new HttpHeaders({
+      'Access-Control-Allow-Origin': this.apiURL_base,
+      'Authorization': `Bearer ${this.accessToken}`
+    });    
+  }
+
+  private checkAPIServices() {    
+    let result = true;
+    this.http.get(this.apiURL_WeatherForecast).subscribe({
+      next: (response) => {
+        console.log("API|checkAPIServices:", response);
+        result = true
+      },
+      error: (error) => {
+        console.log("API|checkAPIServices:", error);
+        result = false
+      },
+      complete: () => this.isAPIrunning = result
+    });
+    return of(result);
+  }
+  
+  // Public methods:
+
+  isAPIEnabled(): Observable<boolean> {    
+    console.log("API|Enabled:", this.isAPIrunning);
+    return of(this.isAPIrunning);
+  }
+
+  getToken(): Observable<IResponseToken> {
+    let body = this.getAuthenticationUser();
     return this.http.post<IResponseToken>(this.apiURL_Authentication, body);
   }
   
@@ -69,10 +107,7 @@ export class RestApiService {
 
   getCustomers(): Observable<ICustomer[]> {
     if (this.accessToken) {
-      let request_headers = new HttpHeaders({
-        'Access-Control-Allow-Origin': this.apiURL_base,
-        'Authorization': `Bearer ${this.accessToken}`
-      });    
+      let request_headers = this.getAuthorizedHeader();
       return this.http.get<ICustomer[]>(this.apiURL_Customers, { headers: request_headers });
     }
     else {
@@ -82,10 +117,7 @@ export class RestApiService {
 
   getPictureMakerSourceData(filter: IDerivedDataFilter): Observable<IActionResponse> {
     if (this.accessToken) {
-      let request_headers = new HttpHeaders({
-        'Access-Control-Allow-Origin': this.apiURL_base,
-        'Authorization': `Bearer ${this.accessToken}`
-      });    
+      let request_headers = this.getAuthorizedHeader(); 
       return this.http.post<IActionResponse>(this.apiURL_PictureMaker_getSourceData, filter, { headers: request_headers });
     }
     else {
@@ -95,10 +127,7 @@ export class RestApiService {
 
   getPictureMakerProcessData(filter: IDerivedDataFilter): Observable<IActionResponse> {
     if (this.accessToken) {
-      let request_headers = new HttpHeaders({
-        'Access-Control-Allow-Origin': this.apiURL_base,
-        'Authorization': `Bearer ${this.accessToken}`
-      });    
+      let request_headers = this.getAuthorizedHeader(); 
       return this.http.post<IActionResponse>(this.apiURL_PictureMaker_processData, filter, { headers: request_headers });
     }
     else {
