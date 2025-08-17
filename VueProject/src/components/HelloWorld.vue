@@ -1,7 +1,11 @@
 <script setup>
 defineProps({
-  msg: {
+  title: {
     type: String,
+    required: true,
+  },
+  is_api_running: {
+    type: Boolean,
     required: true,
   },
 })
@@ -9,10 +13,13 @@ defineProps({
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      Connecting to services
-    </h3>
+    <h1 class="green">{{ title }}</h1>
+    <div v-if="is_api_running">
+      <i>Connected to Orestes.Simulator API services...🎉</i>
+    </div>
+    <div v-else>
+      <p>No access to Orestes.Simulator API services</p>
+    </div>
   </div>
 </template>
 

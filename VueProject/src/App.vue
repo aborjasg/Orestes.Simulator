@@ -1,20 +1,52 @@
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import HelloWorld from './components/HelloWorld.vue'
 import TheWelcome from './components/TheWelcome.vue'
+import ApiServices from '@/services/ApiServices'
+
+const api = new ApiServices();
+const title = 'Orestes.Simulator';
+const isAPIrunning = ref<Boolean>(false);
+
+async function fetchData() {
+    try { 
+         api.getToken()
+        .then(response =>  {
+          let state = response.ok && response.status === 200;          
+          console.log(`App|isAPIrunning=${state}`);       
+          isAPIrunning.value = state;
+        })
+        .catch(() => {
+          isAPIrunning.value = false;
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+onMounted( async () => {
+    fetchData();
+});
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="Orestes.Simulator" />
-    </div>
-  </header>
+<template>  
+    
+    <header>
+      <div class="wrapper">
+        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />        
+        <HelloWorld v-bind:title="title" :is_api_running="isAPIrunning" />
+      </div>
+    </header>
 
   <main>
-    <TheWelcome />
+    
   </main>
+
+  <footer>
+    <div v-if="isAPIrunning">
+      <TheWelcome v-bind:api="api" />
+    </div>
+  </footer>
 </template>
 
 <style scoped>
@@ -31,6 +63,8 @@ header {
   header {
     display: flex;
     place-items: center;
+    align-items: center;
+    align-content: center;
     padding-right: calc(var(--section-gap) / 2);
   }
 
