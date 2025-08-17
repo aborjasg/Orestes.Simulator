@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /ReactProject.7z
 /package-lock.json
 /WebAPI/Orestes.Simulator.DataSource/Repositories/OrestesDB.ldf
+/WebAPI/Orestes.Simulator.DataSource/Repositories/OrestesDB.mdf

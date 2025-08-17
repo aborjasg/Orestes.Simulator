@@ -13,6 +13,7 @@ export class PictureMaker {
 [x: string]: any;
   sourceData$ = {} as IActionResponse;
   processData$ = {} as IActionResponse;
+  
   constructor(private api: RestApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
