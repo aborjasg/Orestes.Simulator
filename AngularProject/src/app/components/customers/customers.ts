@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Injectable, OnInit, Signal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ICustomer, RestApiService } from '../../services/rest-api.service';
+import { ICustomer, ApiService } from '../../services/api.service';
 import { forkJoin, map, Observable, of, retry, shareReplay, switchMap, tap } from 'rxjs';
 
 @Component({
@@ -12,18 +12,18 @@ import { forkJoin, map, Observable, of, retry, shareReplay, switchMap, tap } fro
 })
 export class Customers implements OnInit {
   list$: ICustomer[] = [];  
-  constructor(private api: RestApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
   
   ngOnInit() {
-    this.loadData();    
+    this.getList();    
   } 
 
-  loadData() {
+  getList() {
     this.api.getToken()
     .pipe(
       switchMap(token => {        
         this.api.setToken(token.access_token);
-        return this.api.getCustomers()
+        return this.api.getList<ICustomer>(this.api.apiURL_Customers)
       }))
     .subscribe({ 
         next: list => {
