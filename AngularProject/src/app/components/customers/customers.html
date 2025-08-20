@@ -1,4 +1,4 @@
-<div style="width: 250px;"><b>Customers</b>
+<div style="width: 300px;"><b>Customers</b>
     @if (this.list$.length > 0) {         
     <ul>
         @for (item of this.list$; track item.id) {    
@@ -10,3 +10,11 @@
         <p>Loading data...</p>
     }    
 </div> 
+
+<div>
+    <button (click)="getList()" style="width: 80px;">Load</button>
+    <!-- <button (click)="clearList()">Clear</button> -->
+    <button (click)="addCustomer()" style="width: 80px;">Add</button><br>
+    <input type="text" #inputBox style="width: 70px;" placeholder="ID to delete"/>
+    <button (click)="deleteCustomer(inputBox)" style="width: 80px;">Delete</button>    
+</div>

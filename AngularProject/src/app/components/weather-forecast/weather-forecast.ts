@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IWeatherForecast, RestApiService } from '../../services/rest-api.service';
+import { IWeatherForecast, ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-weather-forecast',
@@ -10,21 +10,20 @@ import { IWeatherForecast, RestApiService } from '../../services/rest-api.servic
 })
 export class WeatherForecast {
   list$: IWeatherForecast[] = [];
-  constructor(private api: RestApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.loadData();
+    this.getList();
   }
 
-  loadData() {
-    this.api.getWeatherForecast().subscribe({
+  getList() {
+    this.api.getList<IWeatherForecast>(this.api.apiURL_WeatherForecast, false).subscribe({
       next: list =>  {
         console.log("API|getWeatherForecast():", list);
-        this.list$ = list
-        this.cdr.detectChanges();
+        this.list$ = list        
       },
       error: error => console.error(`API|Error: ${error}`),
-      complete: () => console.log(`API|End of process`)
+      complete: () => this.cdr.detectChanges()
     });
   }
 }

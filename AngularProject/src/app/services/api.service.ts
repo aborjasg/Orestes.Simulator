@@ -39,13 +39,13 @@ export interface IActionResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class RestApiService {
-  private apiURL_base = 'http://localhost:5062';
+export class ApiService {
+  public apiURL_base = 'http://localhost:5062';
   private apiURL_Authentication = `${this.apiURL_base}/api/Authentication/login`;
-  private apiURL_WeatherForecast = `${this.apiURL_base}/api/WeatherForecast`;
-  private apiURL_Customers = `${this.apiURL_base}/api/Customers`;    
-  private apiURL_PictureMaker_getSourceData = `${this.apiURL_base}/api/PictureMaker/getSourceData`;
-  private apiURL_PictureMaker_processData = `${this.apiURL_base}/api/PictureMaker/processData`;
+  public apiURL_WeatherForecast = `${this.apiURL_base}/api/WeatherForecast`;
+  public apiURL_Customers = `${this.apiURL_base}/api/Customers`;    
+  public apiURL_PictureMaker_sourceData = `${this.apiURL_base}/api/PictureMaker/getSourceData`;
+  public apiURL_PictureMaker_processData = `${this.apiURL_base}/api/PictureMaker/processData`;
   private accessToken: string = "";
   private isAPIrunning: boolean = false;
 
@@ -101,34 +101,60 @@ export class RestApiService {
     this.accessToken = accessToken;
   }
 
-  getWeatherForecast(): Observable<IWeatherForecast[]> {    
-    return this.http.get<IWeatherForecast[]>(this.apiURL_WeatherForecast);
-  }
-
-  getCustomers(): Observable<ICustomer[]> {
-    if (this.accessToken) {
+  // get data rows from DB:
+  getList<T>(api_url:string, isAuthorized: boolean=true): Observable<T[]> {
+    if (isAuthorized && this.accessToken) {
       let request_headers = this.getAuthorizedHeader();
-      return this.http.get<ICustomer[]>(this.apiURL_Customers, { headers: request_headers });
+      return this.http.get<T[]>(api_url, { headers: request_headers });
+    }
+    else if (!isAuthorized) {
+      return this.http.get<T[]>(api_url);
     }
     else {
       return of([]);
     }
   }
 
-  getPictureMakerSourceData(filter: IDerivedDataFilter): Observable<IActionResponse> {
+  saveRecord<T>(api_url:string, data: T): Observable<T> {
     if (this.accessToken) {
-      let request_headers = this.getAuthorizedHeader(); 
-      return this.http.post<IActionResponse>(this.apiURL_PictureMaker_getSourceData, filter, { headers: request_headers });
+      let request_headers = this.getAuthorizedHeader();
+      return this.http.post<T>(api_url, data, { headers: request_headers }).pipe(
+        switchMap((response) => {
+          console.log("API|Record saved successfully:", response);
+          return of(response);
+        }),
+        catchError((error) => {
+          console.error(`API|Error saving record: ${error}`);
+          return of(undefined as unknown as T);
+        })
+      );
     }
     else {
+      return of(undefined as unknown as T);
+    }
+  }
+
+  deleteRecord<T>(api_url:string, id: number): Observable<void> {
+    if (this.accessToken) {
+      let request_headers = this.getAuthorizedHeader();
+      return this.http.delete<void>(`${api_url}/${id}`, { headers: request_headers }).pipe(
+        switchMap(async () => console.log("API|Record saved successfully:", id)),
+        catchError((error) => {
+          console.error(`API|Error saving record: ${error}`);
+          return of();
+        })
+      );
+    }
+    else { 
       return of();
     }
   }
 
-  getPictureMakerProcessData(filter: IDerivedDataFilter): Observable<IActionResponse> {
+  // Get image data from PictureMaker service:
+  getPictureMaker(api_url:string, filter: IDerivedDataFilter): Observable<IActionResponse> {
     if (this.accessToken) {
       let request_headers = this.getAuthorizedHeader(); 
-      return this.http.post<IActionResponse>(this.apiURL_PictureMaker_processData, filter, { headers: request_headers });
+      return this.http.post<IActionResponse>(api_url, filter, { headers: request_headers });
     }
     else {
       return of();

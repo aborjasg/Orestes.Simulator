@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IActionResponse, IDerivedDataFilter, RestApiService } from '../../services/rest-api.service';
+import { IActionResponse, IDerivedDataFilter, ApiService } from '../../services/api.service';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -14,13 +14,13 @@ export class PictureMaker {
   sourceData$ = {} as IActionResponse;
   processData$ = {} as IActionResponse;
   
-  constructor(private api: RestApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.loadData();
+    this.getPicture();
   }    
 
-  loadData() {
+  getPicture() {
     let filter: IDerivedDataFilter = { 
       name: "Combined NCP (Miniature)", 
       compressedData: ""
@@ -29,14 +29,14 @@ export class PictureMaker {
     .pipe(
       switchMap(token => {        
         this.api.setToken(token.access_token);
-        return this.api.getPictureMakerSourceData(filter);
+        return this.api.getPictureMaker(this.api.apiURL_PictureMaker_sourceData, filter);
       }))
     .pipe(
       switchMap(response => {        
         //console.log("API|getPictureMakerSourceData():", response);
         this.sourceData$ = response;
         filter.compressedData = response.content;        
-        return this.api.getPictureMakerProcessData(filter);
+        return this.api.getPictureMaker(this.api.apiURL_PictureMaker_processData, filter);
       }))
     .subscribe({ 
         next: response => {
