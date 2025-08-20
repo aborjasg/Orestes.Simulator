@@ -101,6 +101,7 @@ export class ApiService {
     this.accessToken = accessToken;
   }
 
+  // get data rows from DB:
   getList<T>(api_url:string, isAuthorized: boolean=true): Observable<T[]> {
     if (isAuthorized && this.accessToken) {
       let request_headers = this.getAuthorizedHeader();
@@ -114,6 +115,42 @@ export class ApiService {
     }
   }
 
+  saveRecord<T>(api_url:string, data: T): Observable<T> {
+    if (this.accessToken) {
+      let request_headers = this.getAuthorizedHeader();
+      return this.http.post<T>(api_url, data, { headers: request_headers }).pipe(
+        switchMap((response) => {
+          console.log("API|Record saved successfully:", response);
+          return of(response);
+        }),
+        catchError((error) => {
+          console.error(`API|Error saving record: ${error}`);
+          return of(undefined as unknown as T);
+        })
+      );
+    }
+    else {
+      return of(undefined as unknown as T);
+    }
+  }
+
+  deleteRecord<T>(api_url:string, id: number): Observable<void> {
+    if (this.accessToken) {
+      let request_headers = this.getAuthorizedHeader();
+      return this.http.delete<void>(`${api_url}/${id}`, { headers: request_headers }).pipe(
+        switchMap(async () => console.log("API|Record saved successfully:", id)),
+        catchError((error) => {
+          console.error(`API|Error saving record: ${error}`);
+          return of();
+        })
+      );
+    }
+    else { 
+      return of();
+    }
+  }
+
+  // Get image data from PictureMaker service:
   getPictureMaker(api_url:string, filter: IDerivedDataFilter): Observable<IActionResponse> {
     if (this.accessToken) {
       let request_headers = this.getAuthorizedHeader(); 

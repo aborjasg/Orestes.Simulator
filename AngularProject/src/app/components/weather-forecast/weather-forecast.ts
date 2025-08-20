@@ -20,11 +20,10 @@ export class WeatherForecast {
     this.api.getList<IWeatherForecast>(this.api.apiURL_WeatherForecast, false).subscribe({
       next: list =>  {
         console.log("API|getWeatherForecast():", list);
-        this.list$ = list
-        this.cdr.detectChanges();
+        this.list$ = list        
       },
       error: error => console.error(`API|Error: ${error}`),
-      complete: () => console.log(`API|End of process`)
+      complete: () => this.cdr.detectChanges()
     });
   }
 }
