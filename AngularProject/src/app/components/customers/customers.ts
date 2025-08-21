@@ -47,11 +47,10 @@ export class Customers implements OnInit {
     .subscribe({ 
         next: response => {
           console.log("API|Customer added successfully:", response);
-          this.list$.push(response);
-          this.cdr.detectChanges();
+          this.list$.push(response);          
         },
         error: error => console.error(`API|Error adding customer: ${error}`),
-        complete: () => console.log(`API|End`)
+        complete: () => this.cdr.detectChanges()
     });
   }
 
