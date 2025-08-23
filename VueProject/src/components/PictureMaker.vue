@@ -17,7 +17,7 @@ const processData = ref<IActionResponse>(null);
 async function fetchData() {
     try { 
         let filter: IDerivedDataFilter = { 
-            name: "Combined NCP (Miniature)", 
+            name: "Energy Calibration (Picture)", 
             compressedData: ""
         };
         api.getToken()

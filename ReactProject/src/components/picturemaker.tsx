@@ -12,7 +12,7 @@ function PictureMaker({apiService}: { apiService: ApiServices }) {
     useEffect(() => {      
         const getPictureMakerData = async () => {   
             let filter: IDerivedDataFilter = { 
-                name: "Combined NCP (Miniature)", 
+                name: "Spectrum (Picture)", 
                 compressedData: ""
             };
             api.getToken()
