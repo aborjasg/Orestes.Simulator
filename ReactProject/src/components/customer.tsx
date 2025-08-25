@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { ICustomer } from '../models/interfaces';
-import ApiServices from '../services/apiServices';
+import ApiServices from '../services/ApiServices';
 
 
 function Customers( {apiService}: { apiService: ApiServices }) {        

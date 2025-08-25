@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import './App.css'
 import Customers from './components/customer'
 import PictureMaker from './components/picturemaker'
-import ApiServices from './services/apiServices';
+import ApiServices from './services/ApiServices';
 
 function App() {  
   const [isAPIrunning, setState] = useState<boolean>(false);
