@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { IActionResponse, IDerivedDataFilter } from '../models/interfaces';
-import ApiServices from '../services/apiServices';
+import ApiServices from '../services/ApiServices';
 
 
 function PictureMaker({apiService}: { apiService: ApiServices }) {        
