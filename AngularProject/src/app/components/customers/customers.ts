@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Injectable, OnInit, Signal, signal, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ICustomer, ApiService } from '../../services/api.service';
+import { ICustomer, ApiServices } from '../../services/ApiServices';
 import { forkJoin, map, Observable, of, retry, shareReplay, switchMap, tap } from 'rxjs';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Customers implements OnInit {
   list$: ICustomer[] = []; 
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiServices, private cdr: ChangeDetectorRef) {}
   
   ngOnInit() {
     this.getList();    

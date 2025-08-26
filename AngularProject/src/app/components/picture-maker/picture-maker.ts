@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IActionResponse, IDerivedDataFilter, ApiService } from '../../services/api.service';
+import { IActionResponse, IDerivedDataFilter, ApiServices } from '../../services/ApiServices';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -14,7 +14,7 @@ export class PictureMaker {
   sourceData$ = {} as IActionResponse;
   processData$ = {} as IActionResponse;
   
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiServices, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getPicture();

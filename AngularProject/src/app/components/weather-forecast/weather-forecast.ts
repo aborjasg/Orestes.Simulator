@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IWeatherForecast, ApiService } from '../../services/api.service';
+import { IWeatherForecast, ApiServices } from '../../services/ApiServices';
 
 @Component({
   selector: 'app-weather-forecast',
@@ -10,7 +10,7 @@ import { IWeatherForecast, ApiService } from '../../services/api.service';
 })
 export class WeatherForecast {
   list$: IWeatherForecast[] = [];
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiServices, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.getList();

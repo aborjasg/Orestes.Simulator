@@ -39,7 +39,7 @@ export interface IActionResponse {
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiServices {
   public apiURL_base = 'http://localhost:5062';
   private apiURL_Authentication = `${this.apiURL_base}/api/Authentication/login`;
   public apiURL_WeatherForecast = `${this.apiURL_base}/api/WeatherForecast`;
