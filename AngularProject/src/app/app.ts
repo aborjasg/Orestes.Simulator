@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { WeatherForecast } from "./components/weather-forecast/weather-forecast";
 import { Customers } from "./components/customers/customers";
 import { PictureMaker } from "./components/picture-maker/picture-maker";
-import { ApiService } from './services/api.service';
+import { ApiServices } from './services/ApiServices';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class App {
   protected readonly title = signal('Orestes.Simulator');
 
   isAPIrunning: boolean = false;
-  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiServices, private cdr: ChangeDetectorRef) {}
   
   ngOnInit() {
     this.checkServices();
