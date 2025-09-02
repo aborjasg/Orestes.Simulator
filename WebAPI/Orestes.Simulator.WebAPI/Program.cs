@@ -1,7 +1,11 @@
+using GraphQL;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Orestes.Simulator.DataSource;
+using Orestes.Simulator.DataSource.Models;
+using Orestes.Simulator.WebAPI.Controllers;
 using Orestes.Simulator.WebAPI.Security;
 using System.Text;
 
@@ -51,6 +55,15 @@ builder.Services.AddSingleton<IJwtSettings, JwtSettings>(e => builder.Configurat
 builder.Services.AddDbContext<OrestesDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("OrestesSimulatorConnection")));
 
+
+builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
+builder.Services.AddSingleton<WeatherForecastType>();
+builder.Services.AddSingleton<WeatherForecastQuery>();
+builder.Services.AddSingleton<ISchema, WeatherForecastSchema>();
+builder.Services.AddGraphQL(options => options
+    .AddAutoSchema<WeatherForecastQuery>()
+    .AddSystemTextJson());
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,4 +80,13 @@ app.UseAuthorization();
 app.UseCors("CorsPolicy");
 
 app.MapControllers();
+
+app.UseGraphQL<ISchema>();
+app.UseGraphQLPlayground(
+    "/",
+    new GraphQL.Server.Ui.Playground.PlaygroundOptions
+    {
+        GraphQLEndPoint = "/graphql",
+        SubscriptionsEndPoint = "/graphql"
+    });
 app.Run();
