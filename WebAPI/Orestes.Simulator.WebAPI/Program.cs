@@ -4,6 +4,9 @@ using Microsoft.IdentityModel.Tokens;
 using Orestes.Simulator.DataSource;
 using Orestes.Simulator.WebAPI.Security;
 using System.Text;
+// Add this using directive for MySQL support
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using Orestes.SharedLibrary;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,17 +48,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
            };
        });
 builder.Services.AddSingleton<IJwtSettings, JwtSettings>(e => builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!);
-// Add API Key Validator
-//builder.Services.AddSingleton<IApiKeyValidator, ApiKeyValidator>();
-// Add DB Context
-builder.Services.AddDbContext<OrestesDBContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("OrestesSimulatorConnection")));
 
+// Add DB Context (MSSQL)
+//builder.Services.AddDbContext<OrestesDBContext>(options =>
+//        options.UseSqlServer(builder.Configuration.GetConnectionString("OrestesSimulatorConnection")));
 
-//builder.Services.AddSingleton<IWeatherForecastService, WeatherForecastService>();
-//builder.Services.AddSingleton<WeatherForecastType>();
-//builder.Services.AddSingleton<WeatherForecastQuery>();
-//builder.Services.AddSingleton<ISchema, WeatherForecastSchema>();
+// Add DB Context (MySQL)
+// Ensure you have installed the Pomelo.EntityFrameworkCore.MySql NuGet package
+builder.Services.AddDbContext<OrestesDBContext>(options =>    
+    options.UseMySql(
+            UtilsForMessages.Decompress(builder.Configuration.GetConnectionString("OzoraSoftPictureMakerConnection")!),
+            ServerVersion.AutoDetect(UtilsForMessages.Decompress(builder.Configuration.GetConnectionString("OzoraSoftPictureMakerConnection")!))
+        ));
 
 var app = builder.Build();
 

@@ -10,6 +10,7 @@ namespace Orestes.Simulator.DataSource.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
         public bool Status { get; set; } = true; // 0 = Active, 1 = Inactive
     }
 }
