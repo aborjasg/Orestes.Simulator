@@ -13,7 +13,7 @@ namespace Orestes.Simulator.DataSource
         // Initializer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=OrestesDB;Trusted_Connection=True;");
+            
         }
     }
 }
