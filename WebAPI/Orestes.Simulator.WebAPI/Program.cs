@@ -61,6 +61,12 @@ builder.Services.AddDbContext<OrestesDBContext>(options =>
             ServerVersion.AutoDetect(UtilsForMessages.Decompress(builder.Configuration.GetConnectionString("OzoraSoftPictureMakerConnection")!))
         ));
 
+builder.Services.AddDbContext<OzoraSoftDBContext>(options =>
+    options.UseMySql(
+            UtilsForMessages.Decompress(builder.Configuration.GetConnectionString("OzoraSoftInfoSecControlsConnection")!),
+            ServerVersion.AutoDetect(UtilsForMessages.Decompress(builder.Configuration.GetConnectionString("OzoraSoftInfoSecControlsConnection")!))
+        ));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
