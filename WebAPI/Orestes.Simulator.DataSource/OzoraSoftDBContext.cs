@@ -14,11 +14,12 @@ namespace Orestes.Simulator.DataSource
 
         // Models
         public DbSet<SystemParameter> SystemParameters { get; set; }
+        public DbSet<OrganizationPolicy> OrganizationPolicies { get; set; }        
 
         // Initializer
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            
         }
     }
 }
